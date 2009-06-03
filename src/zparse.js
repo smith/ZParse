@@ -1,1 +1,365 @@
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('5 6=q(a){7.H=a;7.1l=[\'5 $B = [];\',\'5 1g = q(B) {\',\'$B.y((T B == "1p")?B:(B||""));\',\'};\',\'1o($11){ \'].F(\'\');7.1k=\'}8 $B.F("");\';7.1h=[\'\\\\\',\'\\\'\',\'"\',[\'\\n\',\'\\\\n\'],[\'\\t\',\'\\\\t\'],[\'\\r\',\'\\\\r\']]};6.H={};6.1b.1q=q(a){7.19=6.R(a,7.H);7.15=6.13(7.19.G,7.H);7.12=6.Q(7.15,7.1h,7.H,7);1C{7.10=L 1A(\'$11\',7.1l+7.12+7.1k);8 N}1y(e){7.1x=e;8 K}};6.1b.1v=q(a,b){4(b)8 7.10.1u(b,[a]);x 8 7.10(a)};6.V=q(a,b){u(5 i=0;i<b.p;i++){4(b[i]17 16)a=a.I(L M(b[i][0],\'14\'),b[i][1]);x a=a.I(L M(\'\\\\\'+b[i],\'14\'),\'\\\\\'+b[i])}8 a};6.R=q(a,b){5 c,w,k;5 d=[],l=[],G=[];1n(a){u(5 i U b){4(!k||a.C(b[k].D)==-1)k=i;4(a.C(b[i].D)!=-1)4(a.C(b[k].D)>a.C(b[i].D))k=i}c=a.C(b[k].D);w=a.C(b[k].w)+b[k].w.p;4(c!=-1){d.y(a.P(0,c));l.y(a.P(c,w));a=a.P(w)}x{d.y(a);a=\'\'}}u(5 i=0;i<d.p;i++){G.y(d[i]);4(l[i])G.y(l[i])}8{B:d,l:l,G:G}};6.Z=q(a,b){5 c=6.R(b,{1B:{D:\'\\{\',w:\'\\}\'}}).l;b=6.V(b,[\'(\',\')\',\'[\',\']\',\',\',\'.\',\'<\',\'>\',\'*\',\'$\',\'@\']);u(5 i=0;i<c.p;i++){b=b.I(c[i],\'(.*)\');c[i]=c[i].I(\'\\{\',\'\').I(\'\\}\',\'\')}5 d=a.1j(L M(b));5 e={};4(d)u(5 i=0;i<c.p;i++)e[c[i]]=d[i+1];8 e};6.1i=q(a,b){5 c;u(5 i U b)4(a.C(b[i].D)==0){c=i;1z}4(!c)8 K;a=a.P(b[c].D.p,a.C(b[c].w));5 d=\'\';5 e=\'\';4(b[c].l){5 f=[];u(5 i U b[c].l)f.y(i);5 g=L M(\'^(\\/){0,1}(\'+f.F(\'|\')+\')\\\\\\s*(.*)\');5 h=a.1j(g);4(!h)8 K;e=h[1]?N:K;d=h[2];a=h[3]}4(d){4(b[c].l[d].Y==\'1w\'&&e)8 K;4(b[c].l[d].Y==\'1f\'&&e)8{k:c,v:d,w:N}}5 j={};4(d&&b[c].l[d].E)j=6.Z(a,b[c].l[d].E);x 4(!d&&b[c].E)j=6.Z(a,b[c].E);8{k:c,v:d,1e:a,E:j}};6.13=q(c,d){5 e,m,9,1d=0;5 f={1c:N,X:c.F(\'\'),z:[]};5 g=q(a,b){b.1d=a.z.p;a.z.y(b)};9=f;u(5 i=0;i<c.p;i++){m=6.1i(c[i],d);4(!m){4(c[i]){c[i].W=9;g(9,c[i])}}x{e={};e.i=i;e.v=m.v;e.k=m.k;e.E=m.E;e.1t=m.1e;e.W=9;4(m.v&&d[m.k].l[m.v].1s&&!m.w&&T 9.z[9.z.p-1]==\'1m\')9.z.1r();4(m.v&&d[m.k].l[m.v].Y==\'1f\'){4(!m.w){g(9,e);9=e;9.z=[]}x 4(9.v==m.v){9.X=\'\';u(5 j=9.i+1;j<i;j++){9.X+=c[j]}9=9.W}}x g(9,e)}}8 f};6.Q=q(a,b,c,d){4(T a==\'1m\')8\'1g(\\\'\'+6.V(a,b)+\'\\\');\';5 e,J=[];4(a.z)u(5 i=0;i<a.z.p;i++)J.y(6.Q(a.z[i],b,c,d));4(!a.1c){4(a.v)8 c[a.k].l[a.v].1a(a,J.F(\'\'),d);x 8 c[a.k].1a(a,J.F(\'\'),d)}x 8 J.F(\'\')};6.S=q(a){5 b;4(a.o&&a.o.p==1&&a.o[0].A=="#B"){b=a.o[0].18}x{b={};u(5 i=0;i<a.o.p;i++){4(b[a.o[i].A]){4(!(b[a.o[i].A]17 16))b[a.o[i].A]=[b[a.o[i].A]];b[a.o[i].A].y(6.S(a.o[i]))}x 4(a.o[i].A.C(\'#\')==-1)b[a.o[i].A]=6.S(a.o[i])}}4(a.O)u(5 i=0;i<a.O.p;i++)b[\'@\'+a.O[i].A]=a.O[i].18;8 b}',62,101,'||||if|var|ZParse|this|return|current|||||||||||delimiter|tags|res||childNodes|length|function||||for|tagname|closer|else|push|children|nodeName|text|indexOf|opener|arguments|join|all|implementation|replace|content|false|new|RegExp|true|attributes|substring|parseToScript|parseToArray|parseXMLToJSON|typeof|in|escape|parent|innerSource|type|parseArguments|functionScript|data|functionText|parseToTree|gi|sourceTree|Array|instanceof|nodeValue|sourceArray|handler|prototype|isDocument|nr|source|block|_write|escapeChars|parseTag|match|footer|header|string|while|with|number|parse|pop|noTextBefore|argSource|apply|process|single|error|catch|break|Function|expr|try'.split('|'),0,{}))
+/**
+ * ZParse - Javascript Library for Template Parsing
+ * @author Rizqi Ahmad
+ * 
+ * Copyright (c) 2007 Rizqi Ahmad
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Main Object of ZParse. Acting as a class and a namespace at the same time
+ * @param {Object} implementation
+ * @example
+ * 	<code>
+ * 	var parser1 = new ZParse();
+ * 	var parser2 = new ZParse(customImplementation);
+ * 
+ * 	parser1.parse(templateString1);
+ * 	parser2.parse(templateString2);
+ * 
+ *  var result1 = parser1.process(data);
+ *  var result2 = parser2.process(data);
+ *	</code>
+ */
+var ZParse = function(implementation) {
+	/*
+	 * @type {Object} Rule Object
+	 */
+	this.implementation = implementation;
+	
+	/*
+	 * @type {String} Function-Header for the template
+	 */
+	this.header = 	[	'var $text = [];',
+						'var _write = function(text) {',
+							'$text.push((typeof text == "number")?text:(text||""));',
+						'};', 
+						'with($data){ '
+						].join('');
+	
+	/*
+	 * @type {String} Function-Footer for the template
+	 */
+	this.footer = '}return $text.join("");';
+	
+	/*
+	 * @type {Array} Characters to be escaped
+	 */
+	this.escapeChars = ['\\', '\'', '"', ['\n','\\n'], ['\t','\\t'], ['\r', '\\r']];
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *  @type {Object} Default rule object to be used
+ */
+ZParse.implementation = {};
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Parse template string to template function
+ * @param {String} Template string to be parsed
+ * @return {Boolean} Parsing status, false if failed, true if succeeded
+ * @example
+ * 	<code>
+ * 	var parser = new ZParse;
+ * 	parser.parse(myTemplateString);
+ *  </code>
+ */
+ZParse.prototype.parse = function(source) {
+	this.sourceArray = ZParse.parseToArray(source, this.implementation);
+	this.sourceTree = ZParse.parseToTree(this.sourceArray.all, this.implementation);
+	this.functionText = ZParse.parseToScript(this.sourceTree, this.escapeChars, this.implementation, this);
+	
+	try {
+		this.functionScript = new Function('$data', this.header + this.functionText + this.footer);
+		return true;
+	} catch(e){
+		this.error = e;
+		return false;
+	}
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Process created Template with data
+ * @param {Object} data that will be used when executing function. You can access data within template
+ * @param {Object} 'this'-object to be binded in template
+ * @return {String} text result
+ * @example
+ *  <code>
+ *  var parser = new ZParse;
+ *  var string = 'my name ist <$name>. Im <$age> years old.'
+ *  
+ *  parser.parse(string);
+ *  var result = parser.process({name:'Rizqi', age:17});
+ *  // result: "my name is Rizqi. Im 17 years old."
+ *  </code>
+ */
+ZParse.prototype.process = function(data, bind) {
+	if(bind)
+		return this.functionScript.apply(bind, [data]);
+	else
+		return this.functionScript(data);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////    ZParse Global Functions     ////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Escape characters. Needed for parsing template.
+ * @param {String} string containing characters to be escaped
+ * @param {Array} escape characters list
+ * @return {String} parsed string
+ * @example
+ *  <code>
+ *  var escaped = ZParse.escape("lesser < more >", ['<','>']);
+ *  // produce: 'lesser \< more \>'
+ *  </code>
+ */
+ZParse.escape = function(source, list) {
+	for(var i=0; i<list.length; i++) {
+		if(list[i] instanceof Array)
+			source =  source.replace(new RegExp(list[i][0],'gi'), list[i][1]);
+		else
+			source = source.replace(new RegExp('\\'+list[i],'gi'), '\\'+list[i]);
+	}
+	return source;
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+Function: parseToArray
+
+Parse template string to array
+
+Parameters:
+	source -	String, template source
+	imp    -	Object, implementation object
+
+Return:
+	Array, template array
+
+Example:
+	(start code)
+	
+	(end)
+*/
+/**
+ * Parse template string to array
+ * @param {String} source
+ * @param {Object} imp
+ */
+ZParse.parseToArray = function(source, imp) {
+	var opener, closer, delimiter;
+	var text = [],
+		tags = [],
+		all = [];
+		
+	while(source) {
+		for(var i in imp) {
+			if(!delimiter || source.indexOf(imp[delimiter].opener) == -1)
+				delimiter = i;
+			if(source.indexOf(imp[i].opener) != -1)
+				if(source.indexOf(imp[delimiter].opener) > source.indexOf(imp[i].opener))
+					delimiter = i;
+		}
+		
+		opener = source.indexOf(imp[delimiter].opener);
+		closer = source.indexOf(imp[delimiter].closer) + imp[delimiter].closer.length;
+		
+		if(opener != -1) {
+			text.push(source.substring(0,opener));
+			tags.push(source.substring(opener,closer));
+			source = source.substring(closer);
+		} else {
+			text.push(source);
+			source = '';
+		}
+	}
+		
+	for(var i=0; i<text.length; i++) {
+		all.push(text[i]);
+		if(tags[i])
+			all.push(tags[i]);
+	}
+	
+	return {text:text, tags:tags, all:all};
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+ZParse.parseArguments = function(source, expr) {
+	var args = ZParse.parseToArray(expr, {expr:{opener:'\{',closer:'\}'}}).tags;
+	expr = ZParse.escape(expr, ['(' ,')' ,'[' ,']', ',', '.', '<', '>', '*', '$', '@']);
+	for(var i=0; i<args.length; i++) {
+		expr = expr.replace(args[i],'(.*)');
+		args[i] = args[i].replace('\{', '').replace('\}', '');
+	}
+	var matches = source.match(new RegExp(expr));
+	
+	var result = {};
+	if(matches)
+		for(var i=0; i<args.length; i++) 
+			result[args[i]] = matches[i+1];
+	
+	return result;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+ZParse.parseTag = function(source, imp) {
+	// Parse Tag
+	var delimiter;
+	for(var i in imp) 
+		if(source.indexOf(imp[i].opener) == 0) {
+			delimiter = i;
+			break;
+		}
+	if(!delimiter)
+		return false;
+	source =  source.substring(imp[delimiter].opener.length, source.indexOf(imp[delimiter].closer));
+	
+	// Parse tag name
+	var tagname = '';
+	var closer = '';
+	if(imp[delimiter].tags) {
+		var tagArray = [];
+		for(var i in imp[delimiter].tags)
+			tagArray.push(i);
+		var regex = new RegExp('^(\/){0,1}('+tagArray.join('|')+')\\\s*(.*)');
+		var res =  source.match(regex);
+		if(!res)
+			return false;
+		closer = res[1]?true:false;
+		tagname = res[2];
+		source = res[3];
+	}
+	
+	// Parse tag type
+	if(tagname) {
+		if(imp[delimiter].tags[tagname].type == 'single' && closer)
+			return false;
+		if(imp[delimiter].tags[tagname].type == 'block' && closer)
+			return { delimiter:delimiter, tagname:tagname, closer:true};
+	}
+	
+	// Parse arguments
+	var args = {};
+	if(tagname && imp[delimiter].tags[tagname].arguments)
+		args = ZParse.parseArguments(source, imp[delimiter].tags[tagname].arguments);
+	else if(!tagname && imp[delimiter].arguments)
+		args = ZParse.parseArguments(source, imp[delimiter].arguments);
+		
+	return {delimiter:delimiter, tagname:tagname, source:source, arguments:args};
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+ZParse.parseToTree = function(array, imp) {
+	var obj, res, current, nr = 0;
+	var doc = {
+		isDocument:true,
+		innerSource: array.join(''),
+		children: []
+	};
+	
+	var addChild = function(parent,child) {
+		child.nr = parent.children.length;
+		parent.children.push(child);
+	};
+	
+	current = doc; 
+	for(var i=0; i<array.length; i++) {
+		res = ZParse.parseTag(array[i], imp);
+		if(!res) {
+			if(array[i]) {
+				array[i].parent = current;
+				addChild(current, array[i]);
+			}
+		} else {
+			obj = {};
+			
+			obj.i = i;
+			obj.tagname = res.tagname;
+			obj.delimiter = res.delimiter;
+			obj.arguments = res.arguments;
+			obj.argSource = res.source;
+			obj.parent = current;
+			
+			if(res.tagname && imp[res.delimiter].tags[res.tagname].noTextBefore 
+				&& !res.closer && typeof current.children[current.children.length-1] == 'string')
+					current.children.pop();
+			
+			if(res.tagname && imp[res.delimiter].tags[res.tagname].type == 'block'){
+				if(!res.closer) {
+					addChild(current, obj);
+					current = obj;
+					current.children = [];
+				} else if(current.tagname == res.tagname) {
+					current.innerSource = '';
+					for(var j=current.i+1; j<i; j++){
+						current.innerSource += array[j];
+					}
+					current = current.parent;
+				}
+			} else
+				addChild(current, obj);
+		}
+	}
+	
+	return doc;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+ZParse.parseToScript = function(tree, escape, imp, caller) {
+	if(typeof tree == 'string')
+		return '_write(\''+ZParse.escape(tree, escape)+'\');';
+	
+	var result, content = [];
+	
+	if(tree.children)
+		for(var i=0; i<tree.children.length; i++)
+			content.push(ZParse.parseToScript(tree.children[i], escape, imp, caller));
+	if(!tree.isDocument) {
+		if(tree.tagname)
+			return imp[tree.delimiter].tags[tree.tagname].handler(tree, content.join(''), caller);
+		else
+			return imp[tree.delimiter].handler(tree, content.join(''), caller);
+			
+	} else
+		return content.join('');
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ZParse.parseXMLToJSON = function(xml) {
+	var result;
+	if(xml.childNodes && xml.childNodes.length == 1 && xml.childNodes[0].nodeName == "#text") {
+		result = xml.childNodes[0].nodeValue;
+	} else{
+		result = {};
+		for(var i=0; i<xml.childNodes.length; i++) {
+			if(result[xml.childNodes[i].nodeName]) {
+				if(!(result[xml.childNodes[i].nodeName] instanceof Array))
+					result[xml.childNodes[i].nodeName] = [result[xml.childNodes[i].nodeName]];
+				result[xml.childNodes[i].nodeName].push(ZParse.parseXMLToJSON(xml.childNodes[i]));
+			}else if(xml.childNodes[i].nodeName.indexOf('#') == -1)
+				result[xml.childNodes[i].nodeName] = ZParse.parseXMLToJSON(xml.childNodes[i]);
+		}
+	}
+	
+	if(xml.attributes)
+		for(var i=0; i<xml.attributes.length; i++)
+			result['@'+xml.attributes[i].nodeName] = xml.attributes[i].nodeValue;
+	
+	return result;
+}
