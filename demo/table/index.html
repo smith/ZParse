@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>Dynamic Table Demo</title>
+		<script type="text/javascript" language="JavaScript" src="../src/zparse.js"></script>
+		<script type="text/javascript" language="JavaScript" src="../src/implementation.js"></script>
+		<script type="text/javascript" language="JavaScript" src="../prototype.js"></script>
+		<script type="text/javascript" language="JavaScript" src="../firebug/firebug.js"></script>
+
+		<style type="text/css">
+			.hide {
+				display: none;
+			}
+			#container {
+				width: 800px;
+				background: #363636;
+				color: #DADADA;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+			}
+			#container table {
+				width: 100%;
+				text-align: left;
+			}
+			#container td{
+				padding: 3px 10px;
+				border-left: 1px solid #454545;
+			}
+			#container th {
+				border-right: 1px solid #222222;
+				border-left: 1px solid #666666;
+				border-bottom: 1px solid #666666;
+				cursor: pointer;
+				color: #EAEAEA;
+				padding: 3px 10px;
+			}
+			#container th:hover {
+				background: #666666;
+			}
+			#container tr.even:hover td, #container tr.odd:hover td {
+				background: #E1E1E1;
+				color: #363636;
+			}
+			#container th:first-child, #container td:first-child {
+				border-left: none;
+			}
+			#container th:last-child {
+				border-right: none;
+			}
+			#container tr.even td {
+				background: #323232;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		
+		<textarea id="template" class="hide">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<thead>
+					<tr>
+						<th onclick="Sort(this);">Title</th>
+						<th onclick="Sort(this);">Artist</th>
+						<th onclick="Sort(this);">Country</th>
+						<th onclick="Sort(this);">Company</th>
+						<th onclick="Sort(this);">Price</th>
+						<th onclick="Sort(this);">Year</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<:foreach e in CD:>
+						<tr class="${ (e_index%2 == 0) ? 'even' : 'odd' }">
+							<td>${e.TITLE}</td>
+							<td>${e.ARTIST}</td>
+							<td>${e.COUNTRY}</td>
+							<td>${e.COMPANY}</td>
+							<td>${e.PRICE}</td>
+							<td>${e.YEAR}</td>
+						</tr>
+					<:/foreach:>
+				</tbody>
+			</table>
+		</textarea>
+		
+		<script>			
+			var parser = new ZParse(Implementation);
+			parser.parse($('template').value);
+			 
+			new Ajax.Request('data.xml', {
+				method: 'GET',
+				onSuccess: function(res) {
+					var container = $('container');
+					container.catalog = ZParse.parseXMLToJSON(res.responseXML.documentElement);
+					xml = res;
+					container.draw = function(){
+						this.innerHTML = parser.process(this.catalog);
+					};
+					
+					container.draw();
+				}
+			});
+			
+			var Sort = function(elm) {
+				var container = elm.parentNode.parentNode.parentNode.parentNode;
+				
+				container.catalog.CD = container.catalog.CD.sortBy(function(s) {
+					return s[elm.innerHTML.toUpperCase()];
+				});
+				
+				if(container.sortName == elm.innerHTML) {
+					container.sortName = '';
+					container.catalog.CD = container.catalog.CD.reverse();
+				} else
+					container.sortName = elm.innerHTML;
+				
+				container.draw();
+			};
+		</script>
+	</body>
+
+</html>

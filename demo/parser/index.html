@@ -1,0 +1,84 @@
+<html>
+ <head>
+  <title>ZParse Demo</title>
+  <script language="javascript" src="../../src/zparse.js"></script>
+  <script language="javascript" src="../../src/implementation.js"></script>
+ </head>
+ <body>
+
+  <h1>Demo for ZParse.</h1>
+
+  <p>Edit the template and the input data.  
+     Press the Process button to see ZParse in action.</p>
+
+<div>
+<label for="template">Input Template:</label><br/>
+<textarea name="template" id="template" cols="100" rows="22">
+Hello ${customer.first} ${customer.last}.<br/>
+Your shopping cart has ${products.length} item(s):
+<table>
+ <tr><td>Name</td>
+     <td>Description</td>
+     <td>Price</td>
+     <td>Quantity & Alert</td>
+     </tr>
+ <:foreach p in products:>
+     <tr><td>${p.name.toUpperCase()}</td><td>${p.desc}</td>
+         <td>$${p.price}</td><td>${p.quantity} : 
+             ${(p.alert||'').toUpperCase()}</td>
+         </tr>
+ <:/foreach:>
+ <:else:>
+     <tr><td colspan="4">No products in your cart.</tr>
+ <:/else:>
+</table>
+<:if customer.level == "gold":>
+    We love you!  Please check out our Gold Customer specials!
+<:/if:>
+<:else:>
+    Become a Gold Customer by buying more stuff here.
+<:/else:>
+</textarea>
+</div>
+
+<div>
+<label for="data">Input Data:</label><br/>
+<textarea name="data" id="data" cols="100" rows="9">
+var data = {
+    products : [ { name: "mac", desc: "computer",     
+                   price: 1000, quantity: 100, alert:null },
+                 { name: "ipod", desc: "music player", 
+                   price:  200, quantity: 200, alert:"on sale now!" },
+                 { name: "cinema display", desc: "screen",       
+                   price:  800, quantity: 300, alert:"best deal!" } ],
+    customer : { first: "John", last: "Lennon", level: "gold" }
+};
+</textarea>
+</div>
+
+  <div><input type="submit" name="Process" onclick="go()">
+     </div>
+
+  <div>
+    <hr/>
+
+    Output: <div id="output"></div>
+
+    <script language="javascript">
+        var dt = document.getElementById("data");
+        var tpl = document.getElementById("template");
+        var out     = document.getElementById("output");
+		
+		var parser = new ZParse(Implementation);
+        var go = function() {
+			eval(dt.value);
+			
+			parser.parse(tpl.value);
+            out.innerHTML = parser.process(data);
+        }
+
+        go();
+    </script>
+  </div>
+ </body>
+</html>

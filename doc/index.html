@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="author" content="Rizqi Ahmad"/>
+<meta name="description" content="ZParse is a Javascript Template Parsing system which allows you to create own templating rules."/>
+<meta name="keywords" content="zparse, parser, javascript, java, script, template, parsing, advanced, rizqi, raid, raid_ox"/>
+
+<title>ZParse - Advanced Javascript Templating</title>
+
+<link type="text/css" rel="stylesheet" href="style/style.css" />
+<link type="text/css" rel="stylesheet" href="style/SyntaxHighlighter.css" />
+
+<script type="text/javascript" src="script/mootools.js"></script>
+<script type="text/javascript" src="script/shCore.js"></script>
+<script type="text/javascript" src="script/shBrushXml.js"></script>
+<script type="text/javascript" src="script/shBrushJScript.js"></script>
+<script type="text/javascript" src="script/webscript.js"></script>
+</head>
+<body>
+	<div id="header">
+		<div id="logo"></div>
+		<div id="menu">
+			<a href="#home">Home</a>
+			<a href="#usage">Usage</a>
+			<a href="#syntax">Syntax</a>
+			<a href="#tutorial">Tutorial</a>
+			<a href="#customize">Customize</a>
+			<a href="#demo">Demo</a>
+			<a href="#about">About</a>
+		</div>
+	</div>
+	
+	<div id="content">
+		<p class="section">
+			<a name="home"></a>
+			<h1>Introduction</h1>
+			<p>
+				<b>ZParse</b> is a <em>multi-purpose</em>, <em>extensible</em>, <em>self-defineable</em> javascript template parsing system 
+				which lets you define your templating rules. It acts like a preprocessor and parses strings 
+				containing defined delimiters and tags into a javascript function. It is 
+				similar to <a href="http://trimpath.com/project/wiki/JavaScriptTemplates">TrimPath 
+				JavaScript Template</a>. The difference and its strength is that instead of defining the 
+				syntax inside the script it allows <b>YOU</b> to <em>create and define the syntax yourself</em> as you need. 
+				Of course there is a <em>default syntax</em> included for people who don't need a custom syntax. 
+				But the main intention for me creating this parser is to be multi-purpose, so it can fullfill 
+				your demand. Therefore extensibility is very essential. Another strength of this parser is, 
+				that it parses the template tags into a <em>DOM-like tree</em> instead of replacing the tags with 
+				pre-defined functions to give you <em>more flexibility</em> and <em>opportunity to take full advantage</em>
+				of javascript templating.
+			</p>
+			
+			<cite>
+				<s>Download</s> <a href="http://sourceforge.net/project/showfiles.php?group_id=193222">ZParse</a> v0.1 <b>now</b>. Or <a href="../src/zparse.js">zparse.js</a>, 
+				 <a href="../src/zparse.uncompressed.js">zparse.uncompressed.js</a>, <a href="../src/implementation.js">implementation.js</a> only.
+			</cite>
+			<br>
+			<cite> It is actually only tested in ie7 (minimal test ie6, it works recently), opera9 and firefox2. please contact <a href="mailto:raid_ox@yahoo.de">me for bugs</a></cite>
+			
+			<h2>Features at glance:</h2>
+			<ul>
+				<li><u>Lightweight code</u> to include (3kb compressed js file).</li>
+				<li><u>Very extensible</u></li>
+				<li><u>Self-defineable syntax</u></li>
+				<li><u>DOM-like</u> tag parsing. Instead of search and replace</li>
+				<li><u>Advanced tag handling</u>. Allows you to gain access to its children and ancestors</li>
+				<li><u>Advanced arguments handling</u>. You can create argument like "create {object} extends
+				 {class}" and you will get <b>object</b> and <b>class</b> as your arguments variables</li>
+				<li><u>A powerful-enough</u> standard syntax</li>
+			</ul>
+			
+			<cite>
+				<b>ZParse</b> is <a href="http://www.opensource.org/">open source</a>, released under the very liberal 
+				<a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>, so feel free to do anything 
+				you want with it.
+			</cite>
+		</p>
+		
+		<p class="section">
+			<a name="usage"></a>
+			<h1>Using ZParse</h1>
+			<p>
+				First, in your <em>HTML/JSP/PHP/ASP</em> file, include the <em>{your script path}</em>/<u>zparse.js</u> JavaScript file.
+			</p>
+			
+			<textarea name="code" class="html">
+				<script language="javascript" src="script/zparse.js"></script>
+			</textarea>
+			
+			The <u>zparse.js</u> file can live anywhere you want and may be renamed. It has no dependencies to other files. 
+			For example, you might move it to <u>script/lib/zparse.js</u> or <u>js/zparse.js</u>.
+			
+			<p>
+				After including <u>zparse.js</u>, a <em>JavaScript variable</em> named <b>ZParse</b> 
+				will hold an Object ready for you to use. 
+			</p>
+			
+			<h2>ZParse Class</h2>
+			<p>
+				<b>ZParse</b> is a <em>namespace</em> combined with a <em>Class</em>. As a <em>Class</em>
+				it can construct parser objects, which is independent to each other. So many parser with different
+				syntax rules can be created without conflict.
+			</p>
+			<h3>usage :</h3>
+			<cite><b>new</b> <u>ZParse</u>(implementation)</cite>
+			
+			<h3>parameters :</h3>
+			<cite><s>implementation </s><u>{Object}</u>, Syntax rules to be implemented.</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="javascript">
+				var imp = {...}; // Syntax Rules
+				var parser = new ZParse(imp);
+			</textarea>
+			
+			
+			<h2>ZParse.prototype.parse</h2>
+			<p>
+				Parse template string to template function. After executing this function, properties
+				<u>sourceArray</u>, <u>sourceTree</u>, <u>functionText</u> and function <u>functionScript</u>(data)
+				can be accessed.
+			</p>
+			
+			<h3>usage :</h3>
+			<cite>parser.<u>parse</u>(implementation)</cite>
+			
+			<h3>parameters :</h3>
+			<cite><s>source </s><u>{String}</u>, Template string to be parsed.</cite>
+			
+			<h3>return :</h3>
+			<cite><u>{Boolean}</u>, Parsing status, false if failed, true if succeeded.</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="javascript">
+				var imp = {...}; // Syntax Rules
+				var parser = new ZParse(imp);
+				var succ = parser.parse('Hello ${friend}, My name is ${name}. I am ${age} years old.');
+				if(succ)
+					alert(parser.functionText);
+			</textarea>
+			
+			<h2>ZParse.prototype.process</h2>
+			<p>
+				Process created template function with data resource. This function requires the execution
+				of <u>parse</u>() function.
+			</p>
+			
+			<h3>usage :</h3>
+			<cite>parser.<u>process</u>(data, bind)</cite>
+			
+			<h3>parameters :</h3>
+			<cite><s>data </s><u>{Object}</u>, data that will be used when executing template function.</cite>
+			<br/>
+			<cite><s>bind </s><u>{Object}</u>, 'this'-object to be binded in template function.</cite>
+			
+			<h3>return :</h3>
+			<cite><u>{String}</u>, text output.</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="javascript">
+				var imp = {...}; // Syntax Rules
+				var parser = new ZParse(imp);
+				parser.parse('Hello ${friend}, My name is ${name}. I am ${age} years old.');
+				var output = parser.process({friend:'all', name:'Rizqi', age:17});
+				// returns: Hello all, My name is Rizqi. I am 17 years old.
+			</textarea>
+			
+			<h2>ZParse.parseXMLToJSON</h2>
+			<p>
+				Simple but good DOM/XML to JSON converter.
+			</p>
+			
+			<h3>usage :</h3>
+			<cite>ZParse.<u>parseXMLToJSON</u>(xmlObject)</cite>
+		</p>
+		
+		<p class="section">
+			<a name="syntax"></a>
+			<h1>Default Syntax</h1>
+			<p>
+				This section describes the syntax for <b>ZParse</b> <u>default implementation</u>, 
+				explaining its usage and available <em>markups</em> and <em>tags</em>.
+			</p>
+			<p>
+				First, you have to include <u>implementation.js</u>.
+				<textarea name="code" class="html">
+					<script language="javascript" src="script/implementation.js"></script>
+				</textarea>
+				It loads an Object called <u>Implementation</u>.
+				<textarea name="code" class="javascript">
+					var parser = new ZParse(Implementation);
+				</textarea>
+			</p>
+			
+			<h2>Print</h2>
+			<p>
+				You can print any javascript expression except <em>{ }</em> using <u>${expr}</u> . 
+				If you need	to use <em>{ }</em>, you can use <u>&lt;$expr:&gt;</u> instead.
+			</p>
+			
+			<h3>syntax :</h3>
+			<cite>
+				${ <em>javascript variable to print</em> }
+			</cite>
+			<br/>
+			<cite>
+				&lt;$ <em>javascript variable to print</em> :&gt;
+			</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="html">
+				<div id="card">
+					<div>name: ${name} </div>
+					<div>address: <$getAddress({name:name}):> </div>
+				</div>
+			</textarea>
+			
+			<h2>Code Snippet</h2>
+			<p>
+				You can insert javascript code by using <u>&lt;% your code %&gt;</u>.
+			</p>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="html">
+				<% var name = "Solid Snake", address = "somewhere"; %>
+				<div id="card">
+					<div>name: ${name} </div>
+					<div>address: ${address} </div>
+				</div>
+			</textarea>
+			
+			<h2>Statements</h2>
+			<p>
+				Statement tags are nestable in just like JavaScript statement blocks 
+				(<u> if /  else / for </u>) are nestable.
+			</p>
+			
+			<h2><u>if</u>, <u>elseif</u>, <u>else</u>. Conditional statements</h2>
+			<p>
+				You can use <u>if / else</u> <em>condition</em> as you do in javascript.
+			</p>
+			
+			<h3>syntax :</h3>
+			<cite>
+				&lt;:<u>if</u> <em>condition</em> :&gt; todo &lt;:/<u>if</u>:&gt;
+			</cite>
+			<br/>
+			<cite>
+				&lt;:<u>elseif</u> <em>condition</em> :&gt; todo &lt;:/<u>elseif</u>:&gt;
+			</cite>
+			<br/>
+			<cite>
+				&lt;:<u>else</u>:&gt; todo &lt;:/<u>else</u>:&gt;
+			</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="html">
+				<% var name = "Solid Snake", address = "somewhere"; %>
+				<div id="card">
+					<:if name && address:>
+						<div>name: ${name} </div>
+						<div>address: ${address} </div>
+					<:/if:>
+					<:elseif name:>
+						<div>name: ${name} </div>
+					<:/elseif:>
+					<:else:>
+						no card loaded.
+					<:/else:>
+				</div>
+			</textarea>
+			
+			<h2><u>for</u>, <u>foreach</u>, <u>else</u>. Conditionable loop statements</h2>
+			<p>
+				You can use <u>for / foreach</u> <em>loop statement</em> as you do in javascript.
+				You can also create an exception if the object you iterate <u>undefined</u> or
+				if the array doesn't contain any element by using <u>else</u> tag after <u>for / foreach</u> tag.
+			</p>
+			
+			<h3>syntax :</h3>
+			<cite>
+				&lt;:<u>for</u> <em>index</em> in <em>array/object</em> :&gt; todo &lt;:/<u>for</u>:&gt;
+			</cite>
+			<br/>
+			<cite>
+				&lt;:<u>foreach</u> <em>element</em> in <em>array/object</em> :&gt; todo &lt;:/<u>foreach</u>:&gt;
+			</cite>
+			<br/>
+			<cite>
+				&lt;:<u>else</u>:&gt; todo &lt;:/<u>else</u>:&gt;
+			</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="html">
+				<% 
+					var cards = [
+						{name:'John Woo', address: 'Hollywood'},
+						{name:'Adolf Hitler', address: 'Hell'},
+						{name:'Josef Stalin', address: 'Hell'},
+						{name:'Solid Snake', address: 'Somewhere'}
+					];
+				%>
+				<table>
+					<tr>
+						<th>Nr.</th>
+						<th>Name</th>
+						<th>Address</th>
+					</tr>
+					<:for i in cards:>
+						<tr>
+							<td>${i}</td>
+							<td>${cards[i].name}</td>
+							<td>${cards[i].address}</td>
+						</tr>
+					<:/for:>
+					<:else:>
+						<tr>
+							<td colspan="3">no data!!!</td>
+						</tr>
+					<:/else:>
+				</table>
+			</textarea>
+			
+			<h2><u>Macro</u> declaration</h2>
+			<p>
+				A <u>macro</u> is like a javascript function, except the body of the macro 
+				is another <b>zparse</b> <em>template</em>, not javascript. Macro name can be any
+				javascript variable or even a property of a javascript object. use <u>$data.{macroName}</u> if
+				you want to declare your object in data resource or use <u>window.{macroName}</u> if
+				you want your macro to be declared as global function.
+			</p>
+			
+			<h3>syntax :</h3>
+			<cite>
+				&lt;:<u>macro</u> <em>name</em>( <em>arg1 [, arg2 ...]</em> ):&gt; todo &lt;:/<u>macro</u>:&gt;
+			</cite>
+			<br/>
+			<cite>
+				&lt;:<u>macro</u> <em>object.name</em>( <em>arg1 [, arg2 ...]</em> ):&gt; todo &lt;:/<u>macro</u>:&gt;
+			</cite>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="html">
+				<% 
+					var cards = [
+						{name:'John Woo', address: 'Hollywood'},
+						{name:'Adolf Hitler', address: 'Hell'},
+						{name:'Josef Stalin', address: 'Hell'},
+						{name:'Solid Snake', address: 'Somewhere'}
+					];
+				%>
+				
+				<:macro createRow(data):>
+					<tr>
+						<td>${data.name}</td>
+						<td>${data.address}</td>
+					</tr>	
+				<:/macro:>
+				
+				<table>
+					<tr>
+						<th>Nr.</th>
+						<th>Name</th>
+						<th>Address</th>
+					</tr>
+					<:for i in cards:>
+						${createRow(cards[i])}
+					<:/for:>
+					<:else:>
+						<tr>
+							<td colspan="3">no data!!!</td>
+						</tr>
+					<:/else:>
+				</table>
+			</textarea>
+			
+			<h2>cdata</h2>
+			<p>
+				You can use the <u>cdata</u> markup syntax to tell zparse to ignore processing 
+				for a block of text. The text will be emitted without any tag or markup processing.
+			</p>
+			<h3>syntax :</h3>
+			<cite>
+				&lt;:<u>cdata</u>:&gt; ... &lt;:/<u>cdata</u>:&gt;
+			</cite>
+			
+			<h3>limitation :</h3>
+			<p>
+				because the implementation is executed after building the DOM-like tree,
+				any zparse tags inside the <u>cdata</u> block must be valid. So if you have
+				any <u>if, else, elseif, for, forelse, macro, etc.</u> in <u>cdata</u> you have
+				to close them properly.
+			</p>
+		</p>
+		
+		<p class="section">
+			<a name="tutorial"></a>
+			<h1>Tutorial</h1>
+			<p>
+				coming soon...
+			</p>
+		</p>
+		
+		<p class="section">
+			<a name="customize"></a>
+			<h1>Creating Custom Template Rules</h1>
+			<p>
+				With <b>ZParse</b> you are allowed to create your own rules. This can be realized
+				with the <u>implementation</u> object. The <u>implementation</u> object is a simple
+				javascript object with certain structure.
+			</p>
+			<textarea name="code" class="javascript">
+				var myImplementation = {
+					// delimiter without tagname
+					'delimiterName1': {
+						opener: '{%', // delimiter opener syntax
+						closer: '%}', // delimiter closer
+						handler: function(tree, content, caller){ // tag handler
+							var ThingsBetweenOpenerAndCloser  = tree.argSource;
+							return someKindOfScriptAsString; // return output string
+						}
+					},
+					
+					// delimiter with tagname
+					'delimiterName2': {
+						opener: '{:',
+						closer: ':}',
+						tags: {
+						
+							// single tag, no end tag. It can't have any child tags. example: {:tagname1 whatever:}  
+							'tagname1': {
+								type: 'single',
+								handler: function(tree, content, caller){
+									var ThingsAfterTagName  = tree.argSource; // returns "whatever" in example case
+									return someKindOfScriptAsString;
+								}
+							},
+							
+							// block tag, it can have children. Similar to statements in default implementation   
+							'tagname2': {
+								type: 'block',
+								handler: function(tree, content, caller){
+									var ThingsInsideThisBlock = content; // parsed content
+									var ContentBeforeParsed = tree.innerSource;
+									return someKindOfScriptAsString;
+								}
+							},
+							
+							// tag with arguments
+							'tagname3': {
+								type: 'block',
+								noTextBefore: true, // Delete text before this tag.
+								arguments: '{subclass} extends {parentclass}',
+								handler: function(tree, content, caller){
+									var subclass = tree.arguments.subclass;
+									var parentclass = tree.arguments.parentclass;
+									return someKindOfScriptAsString;
+								}
+							}
+						}
+					}
+				};
+			</textarea>
+			
+			<h2>delimiter and tag name</h2>
+			<p>
+				They are just placeholders, it's not restricted to anything.
+			</p>
+			
+			<h2>opener and closer</h2>
+			<p>
+				<u>Opener</u> and <u>closer</u> can be any character that you wish to be delimiter
+				for your template tag. For example, if you want to have syntax like <em>${variable}</em>,
+				you have to define <em>${</em> as opener and <em>}</em> as closer.
+			</p>
+			
+			<h2>tag type</h2>
+			<p>
+				There are currently 2 types implemented: <em>single</em> and <em>block</em>. Single
+				tags can't contain any child and can't be nested. Block tags can contain children and
+				can be nested, but they'll have to be closed properly.
+			</p>
+			
+			<h3>example :</h3>
+			<textarea name="code" class="javascript">
+				{:single "I am a single tag, I can not be nested":}
+				
+				{:block "I can have children, but I have to be closed properly":}
+					{:child "0":},{:child "1":},{:child "2":}
+				{:/block:}
+			</textarea>
+			
+			<h2>tag arguments</h2>
+			<p>
+				<u>Arguments</u> are automatically parsed argument string. It is optional, if you use
+				it, <u>tree.arguments.</u><em>{your argument}</em> will be accessible. If not you can
+				still use <u>tree.argSource</u> to gain access inside delimiter.
+			</p>
+			
+			<h2>tree argument</h2>
+			<p>
+				<u>Tree</u> is current child to be parsed in <u>handler function</u>. It is a DOM-like
+				object that contains properties. It has information about its parent, children, arguments, etc.
+			</p>
+			
+			<h3>parameters :</h3>
+			<cite><s>tagname</s> <u>{string}</u> its tagname</cite>
+			<br/>
+			<cite><s>delimiter</s> <u>{string}</u> its delimiter name</cite>
+			<br/>
+			<cite><s>arguments</s> <u>{object}</u> arguments generated by arguments-parser</cite>
+			<br/>
+			<cite><s>argSource</s> <u>{string}</u> Things inside delimiter without tagname</cite>
+			<br/>
+			<cite><s>innerSource</s> <u>{string}</u> all inside the block as unparsed string</cite>
+			<br/>
+			<cite><s>parent</s> <u>{tree object}</u> tree parent object</cite>
+			<br/>
+			<cite><s>children</s> <u>{tree object}</u> children inside the block</cite>
+			<br/>
+			<cite><s>nr</s> <u>{number}</u> its number as parent's child. you can obtain the next or previous child by invoking <u>tree.parent.children[tree.nr+1]</u></cite>
+			
+			<h2>content</h2>
+			<p>
+				If you have a <em>block</em> tag, you can access <u>content</u> argument. It contains the
+				parsed string of the children. If you want to access the unparsed string use <u>tree.innerSource</u>.
+			</p>
+			
+			<h2>caller</h2>
+			<p>
+				With <u>caller</u> you have access to the <em>parser object</em> that calls the handler.
+			</p>
+		</p>
+		
+		<p class="section">
+			<a name="demo"></a>
+			<h1>Demo</h1>
+			<ul>
+				<li><a href="../demo/table">Dynamic Table demo</a></li>
+				<li><a href="../demo/parser">ZParse Test Site</a></li>
+			</ul>
+		</p>
+		
+		<p class="section">
+			<a name="about"></a>
+			<h1>About Me</h1>
+			<p>
+				I am <u>Rizqi</u>, born in Indonesia, living in Hamburg, Germany. I have experiences in
+				coding <em>javascript</em> since I was 14. But I was too shy and lazy to be active in
+				the web. So this is my first contribution to the net. I appreciate any kind of response from
+				you (except spam), please contact <a href="mailto:raid_ox@yahoo.de">me</a>.
+			</p>
+		</p>
+	</div>
+</body>
+</html>
