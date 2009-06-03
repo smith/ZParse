@@ -22,7 +22,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+/*global ZParse */
+/*jslint evil: true */
+
 /**
  * Main Object of ZParse. Acting as a class and a namespace at the same time
  * @param {Object} implementation
@@ -110,10 +114,11 @@ ZParse.prototype.parse = function(source) {
  *  </code>
  */
 ZParse.prototype.process = function(data, bind) {
-	if(bind)
+	if(bind) {
 		return this.functionScript.apply(bind, [data]);
-	else
+    } else {
 		return this.functionScript(data);
+    }
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,10 +137,11 @@ ZParse.prototype.process = function(data, bind) {
  */
 ZParse.escape = function(source, list) {
 	for(var i=0; i<list.length; i++) {
-		if(list[i] instanceof Array)
+		if(list[i] instanceof Array) {
 			source =  source.replace(new RegExp(list[i][0],'gi'), list[i][1]);
-		else
+        } else {
 			source = source.replace(new RegExp('\\'+list[i],'gi'), '\\'+list[i]);
+        }
 	}
 	return source;
 };
@@ -169,13 +175,16 @@ ZParse.parseToArray = function(source, imp) {
 		all = [];
 		
 	while(source) {
-		for(var i in imp) {
-			if(!delimiter || source.indexOf(imp[delimiter].opener) == -1)
+		for(var i in imp) { if (imp.hasOwnProperty(i)) {
+			if(!delimiter || source.indexOf(imp[delimiter].opener) == -1) {
 				delimiter = i;
-			if(source.indexOf(imp[i].opener) != -1)
-				if(source.indexOf(imp[delimiter].opener) > source.indexOf(imp[i].opener))
+            }
+			if(source.indexOf(imp[i].opener) != -1) {
+				if(source.indexOf(imp[delimiter].opener) > source.indexOf(imp[i].opener)) {
 					delimiter = i;
-		}
+                }
+            }
+		}}
 		
 		opener = source.indexOf(imp[delimiter].opener);
 		closer = source.indexOf(imp[delimiter].closer) + imp[delimiter].closer.length;
@@ -190,10 +199,9 @@ ZParse.parseToArray = function(source, imp) {
 		}
 	}
 		
-	for(var i=0; i<text.length; i++) {
+	for(i=0; i<text.length; i++) {
 		all.push(text[i]);
-		if(tags[i])
-			all.push(tags[i]);
+		if(tags[i]) { all.push(tags[i]); }
 	}
 	
 	return {text:text, tags:tags, all:all};
@@ -210,10 +218,12 @@ ZParse.parseArguments = function(source, expr) {
 	var matches = source.match(new RegExp(expr));
 	
 	var result = {};
-	if(matches)
-		for(var i=0; i<args.length; i++) 
+	if(matches) {
+		for(i=0; i<args.length; i++)  {
 			result[args[i]] = matches[i+1];
-	
+        }
+    }	
+
 	return result;
 };
 
@@ -221,13 +231,15 @@ ZParse.parseArguments = function(source, expr) {
 ZParse.parseTag = function(source, imp) {
 	// Parse Tag
 	var delimiter;
-	for(var i in imp) 
-		if(source.indexOf(imp[i].opener) == 0) {
+	for(var i in imp) {
+		if(source.indexOf(imp[i].opener) === 0) {
 			delimiter = i;
 			break;
 		}
-	if(!delimiter)
+    }
+	if(!delimiter) {
 		return false;
+    }
 	source =  source.substring(imp[delimiter].opener.length, source.indexOf(imp[delimiter].closer));
 	
 	// Parse tag name
@@ -235,12 +247,14 @@ ZParse.parseTag = function(source, imp) {
 	var closer = '';
 	if(imp[delimiter].tags) {
 		var tagArray = [];
-		for(var i in imp[delimiter].tags)
-			tagArray.push(i);
+        for(i in imp[delimiter].tags) { 
+            if (imp[delimiter].tags.hasOwnProperty(i)) { tagArray.push(i); }
+        }
 		var regex = new RegExp('^(\/){0,1}('+tagArray.join('|')+')\\\s*(.*)');
 		var res =  source.match(regex);
-		if(!res)
+		if(!res) {
 			return false;
+        }
 		closer = res[1]?true:false;
 		tagname = res[2];
 		source = res[3];
@@ -248,18 +262,21 @@ ZParse.parseTag = function(source, imp) {
 	
 	// Parse tag type
 	if(tagname) {
-		if(imp[delimiter].tags[tagname].type == 'single' && closer)
+		if(imp[delimiter].tags[tagname].type == 'single' && closer) {
 			return false;
-		if(imp[delimiter].tags[tagname].type == 'block' && closer)
+        }
+		if(imp[delimiter].tags[tagname].type == 'block' && closer) {
 			return { delimiter:delimiter, tagname:tagname, closer:true};
+        }
 	}
 	
 	// Parse arguments
 	var args = {};
-	if(tagname && imp[delimiter].tags[tagname].arguments)
+	if(tagname && imp[delimiter].tags[tagname].arguments) {
 		args = ZParse.parseArguments(source, imp[delimiter].tags[tagname].arguments);
-	else if(!tagname && imp[delimiter].arguments)
+    } else if(!tagname && imp[delimiter].arguments) {
 		args = ZParse.parseArguments(source, imp[delimiter].arguments);
+    }
 		
 	return {delimiter:delimiter, tagname:tagname, source:source, arguments:args};
 };
@@ -296,10 +313,12 @@ ZParse.parseToTree = function(array, imp) {
 			obj.argSource = res.source;
 			obj.parent = current;
 			
-			if(res.tagname && imp[res.delimiter].tags[res.tagname].noTextBefore 
-				&& !res.closer && typeof current.children[current.children.length-1] == 'string')
+			if (res.tagname && 
+                imp[res.delimiter].tags[res.tagname].noTextBefore && 
+                !res.closer && 
+                typeof current.children[current.children.length-1] == 'string') {
 					current.children.pop();
-			
+            }
 			if(res.tagname && imp[res.delimiter].tags[res.tagname].type == 'block'){
 				if(!res.closer) {
 					addChild(current, obj);
@@ -312,8 +331,7 @@ ZParse.parseToTree = function(array, imp) {
 					}
 					current = current.parent;
 				}
-			} else
-				addChild(current, obj);
+			} else { addChild(current, obj); }
 		}
 	}
 	
@@ -322,22 +340,27 @@ ZParse.parseToTree = function(array, imp) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 ZParse.parseToScript = function(tree, escape, imp, caller) {
-	if(typeof tree == 'string')
+	if(typeof tree == 'string') {
 		return '_write(\''+ZParse.escape(tree, escape)+'\');';
+    }
 	
 	var result, content = [];
 	
-	if(tree.children)
-		for(var i=0; i<tree.children.length; i++)
+	if(tree.children) {
+		for(var i=0; i<tree.children.length; i++) {
 			content.push(ZParse.parseToScript(tree.children[i], escape, imp, caller));
+        }
+    }
 	if(!tree.isDocument) {
-		if(tree.tagname)
+		if(tree.tagname) {
 			return imp[tree.delimiter].tags[tree.tagname].handler(tree, content.join(''), caller);
-		else
+        } else {
 			return imp[tree.delimiter].handler(tree, content.join(''), caller);
+        }
 			
-	} else
+	} else {
 		return content.join('');
+    }
 };
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -349,17 +372,21 @@ ZParse.parseXMLToJSON = function(xml) {
 		result = {};
 		for(var i=0; i<xml.childNodes.length; i++) {
 			if(result[xml.childNodes[i].nodeName]) {
-				if(!(result[xml.childNodes[i].nodeName] instanceof Array))
+				if(!(result[xml.childNodes[i].nodeName] instanceof Array)) {
 					result[xml.childNodes[i].nodeName] = [result[xml.childNodes[i].nodeName]];
+                }
 				result[xml.childNodes[i].nodeName].push(ZParse.parseXMLToJSON(xml.childNodes[i]));
-			}else if(xml.childNodes[i].nodeName.indexOf('#') == -1)
+			}else if(xml.childNodes[i].nodeName.indexOf('#') == -1) {
 				result[xml.childNodes[i].nodeName] = ZParse.parseXMLToJSON(xml.childNodes[i]);
+            }
 		}
 	}
 	
-	if(xml.attributes)
-		for(var i=0; i<xml.attributes.length; i++)
+	if(xml.attributes) {
+		for(i=0; i<xml.attributes.length; i++) {
 			result['@'+xml.attributes[i].nodeName] = xml.attributes[i].nodeValue;
+        }
+    }
 	
 	return result;
-}
+};
